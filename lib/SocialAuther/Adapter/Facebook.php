@@ -52,7 +52,7 @@ class Facebook extends AbstractAdapter
                 'code'          => $_GET['code']
             );
 
-            parse_str($this->get('https://graph.facebook.com/oauth/access_token', $params, false), $tokenInfo);
+            $tokenInfo = json_decode($this->post('https://graph.facebook.com/oauth/access_token', $params, false), true);
 
             if (count($tokenInfo) > 0 && isset($tokenInfo['access_token'])) {
                 $params = array('access_token' => $tokenInfo['access_token']);
@@ -81,7 +81,7 @@ class Facebook extends AbstractAdapter
                 'client_id'     => $this->clientId,
                 'redirect_uri'  => $this->redirectUri,
                 'response_type' => 'code',
-                'scope'         => 'email,user_birthday'
+                'scope'         => 'email,public_profile'
             )
         );
     }
